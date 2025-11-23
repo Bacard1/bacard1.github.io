@@ -162,7 +162,7 @@ const translations = {
         "contact.description": "If you need help or have questions, feel free to contact me.",
         // Support
         "support.title": "Generators",
-        "support.description": "In case of problems with the generators, write to me at pasevdenislav@gmail.com with the subject 'HASS Generators' or via the contact form on the site.",
+        "support.description": "If you encounter any problems with the generators, feel free to contact me using our contact form. In case of difficulties, we hope you will look for me, even for criticisms, they are important to me in order not to stop my aspiration to improve and learn every day.",
         "support.generators.title": "Generators",
         // "support.generators.item1": "ntfy notifications generator",
         // "support.generators.item2": "Mobile app notification generator",
@@ -178,30 +178,30 @@ const translations = {
     
     // ----------------------------------------------------------------------------------------
     // ----------------------------------------------------------------------------------------
-    // Bulgarian translations
+    // български преводи
     // ----------------------------------------------------------------------------------------
     // ----------------------------------------------------------------------------------------
     bg: {
-        // Projects - Shopping  
+        // проекти - SПазаруване 
         "projects.shopping.title": "🛒 Списък за пазаруване с изображения",
         "projects.shopping.li1": "Бързо намиране на артикули по категории",
         "projects.shopping.li2": "Визуална идентификация чрез изображения",
         "projects.shopping.li3": "Членовете на домакинството получават известия за нови артикули",
         "projects.shopping.li4": "Автоматично премахва отметнати артикули",
 
-        // Documentation section
+        // Документация sраздел
         "documentation.description": "Документация за Home Assistant проекти",
         "documentation.repositories": "Списък с add-on хранилища", 
         "documentation.automations": "Видове автоматизации",
         "documentation.configurations": "Методи на конфигуриране",
 
         // Support/Generators section
-        "support.generators.description": "В случай на проблеми с генераторите, пишете ми на pasevdenislav@gmail.com със тема 'HASS Генератори' или чрез контактната форма на сайта.",
-        "support.generators.ntfy": "Генератор за ntfy известия",
-        "support.generators.mobile": "Генератор на известия до mobile app", 
-        "support.generators.shell": "Генератор на command shell кодове",
+        // "support.generators.description": "В случай на проблеми с генераторите, пишете ми на pasevdenislav@gmail.com със тема 'HASS Генератори' или чрез контактната форма на сайта.",
+        // "support.generators.ntfy": "Генератор за ntfy известия",
+        // "support.generators.mobile": "Генератор на известия до mobile app", 
+        // "support.generators.shell": "Генератор на command shell кодове",
 
-        // Contact Form (ADD THESE)
+        // Форма за контакт (ДОБАВЕТЕ ТЕЗИ)
         "contact.title": "Контакт",
         "contact.description": "Изпратете ни съобщение и ще ви отговорим възможно най-бързо.",
         "contact.form.name": "Име",
@@ -213,7 +213,7 @@ const translations = {
         "contact.form.success": "Съобщението е изпратено успешно! Ще се свържем с вас скоро.",
         "contact.form.error": "Грешка при изпращане. Моля, опитайте отново.",
         "contact.form.validation": "Моля, попълнете всички полета.",
-        // Navigation
+        // Навигация
         "nav.home": "Начало",
         "nav.projects": "Проекти",
         "nav.about": "За нас", 
@@ -227,7 +227,7 @@ const translations = {
         "hero.description": "Добре дошли в моето хранилище за Home Assistant! Тук ще откриете колекция от мои проекти, автоматизации, конфигурации и интеграции, създадени с цел да улеснят ежедневието, да повишат комфорта и да спестят енергия в интелигентния дом.",
         "hero.cta": "Разгледай Проекти",
         
-        // Summary
+        // Резюме
         "summary.title": "💬 ОБОБЩЕНИЕ", 
         "summary.item1.title": "Адаптивен Дизайн",
         "summary.item1.text": "Всички елементи и текст се мащабират автоматично според размера на екрана, като се поддържа четливост.",
@@ -242,11 +242,11 @@ const translations = {
         "summary.item6.title": "Офлайн Функционалност",
         "summary.item6.text": "Всичко функционира без интернет връзка.",
         
-        // Projects
+        // проекти
         "projects.title": "🛠️ ПРОЕКТИ", 
         "projects.advantages": "Предимства:",
         "projects.goto": "↪️ КЪМ ПРОЕКТА ▶️",
-        // Zigbee project (BG)
+        // Проект Zigbee (BG)
         "projects.zigbee.title": "🛜 Създаване и интегриране на Zigbee мрежа",
         "projects.zigbee.imageAlt": "Zigbee мрежа",
         "projects.zigbee.li1": "Работи без интернет с Zigbee2MQTT",
@@ -257,7 +257,7 @@ const translations = {
         "projects.zigbee.li6": "Възможност за ъпгрейд при натоварване на мрежата",
         "projects.shopping.imageAlt": "Списък за пазаруване",
 
-        // Допълнителни преводи за проекти
+        // Zusätzlich прпревежfürмаProjekteи
         "projects.wled.title": "🎤🔉 WLED SoundReactive Интелигентно светлинно шоу",
         "projects.wled.imageAlt": "WLED SoundReactive анимация",
         "projects.wled.li1": "Реакция в реално време извън човешкото възприятие",
@@ -311,22 +311,22 @@ const translations = {
         "projects.timer.li2": "Изпълнява действия след изтичане на интервала",
         "projects.timer.li3": "Предотвратява преждевременно задействане",
 
-        // About
+        // За
         "about.title": "За нас",
         "about.description": "Това хранилище съдържа моите персонални проекти за Home Assistant, автоматизации, конфигурации и интеграции. Повечето проекти имат поддръжка на английски и български и редовно добавям нови функции и подобрения.",
-        // Documentation
+        // Документация
         "documentation.title": "Документация",
         "documentation.link1": "Списък с add-on хранилища",
         "documentation.link2": "Видове автоматизации", 
         "documentation.link3": "Методи на конфигуриране",
         
         
-        // Contact
+        // Контакт
         "contact.title": "Контакт",
         "contact.description": "Ако имате нужда от помощ или въпроси, свържете се с мен.",
-        // Support
+        // поддръжка
         "support.title": "Генератори",
-        "support.description": "При нередности с генераторите ми пишете на имейл pasevdenislav@gmail.com с тема 'HASS Генератори' или чрез контактната форма в сайта.",
+        "support.description": "Ако срещнете проблеми с генераторите, не се колебайте да се свържете с мен с помощта на контактната ни форма. В случай на трудности с се надяваме да ме потърсите, дори и за критики, те са важни за мен за да не спира стремежа ми да се подобрявам и уча със всеки ден.",
         "support.generators.title": "Генератори",
         // "support.generators.item1": "Генератор за ntfy известия",
         // "support.generators.item2": "Генератор на известия до mobile app",
@@ -342,24 +342,24 @@ const translations = {
     
     // ----------------------------------------------------------------------------------------
     // ----------------------------------------------------------------------------------------
-    // German translations
+    // Deutsche Übersetzungen
     // ----------------------------------------------------------------------------------------
     // ----------------------------------------------------------------------------------------
     de: {
-        // Projects - Shopping
+        // Projekte - Einkaufen
         "projects.shopping.title": "🛒 Einkaufsliste mit Bildern", 
         "projects.shopping.li1": "Schnelles Finden von Artikeln nach Kategorien",
         "projects.shopping.li2": "Visuelle Identifikation durch Bilder",
         "projects.shopping.li3": "Haushaltsmitglieder erhalten Benachrichtigungen für neue Artikel",
         "projects.shopping.li4": "Entfernt automatisch abgehakte Artikel",
 
-        // Documentation section
+        // Dokumentationsbereich
         "documentation.description": "Dokumentation für Home Assistant Projekte",
         "documentation.repositories": "Liste der Add-on-Repositorys",
         "documentation.automations": "Arten von Automatisierungen",
         "documentation.configurations": "Konfigurationsmethoden",
 
-        // Documentation links  
+        // Documentation links 
         
         
         
@@ -506,7 +506,7 @@ const translations = {
         "contact.description": "Wenn Sie Hilfe benötigen oder Fragen haben, kontaktieren Sie mich gerne.",
         // Support
         "support.title": "Generators",
-        "support.description": "Bei Unregelmäßigkeiten mit den Generatoren schreiben Sie mir bitte eine E-Mail an pasevdenislav@gmail.com mit dem Betreff 'HASS Generatoren' oder über das Kontaktformular auf der Website.",
+        "support.description": "Sollten Sie Probleme mit den Generatoren haben, können Sie mich gerne über unser Kontaktformular kontaktieren. Bei Schwierigkeiten hoffen wir, dass Sie sich an mich wenden, auch bei Kritik, sie ist mir wichtig, um meinen Wunsch, mich jeden Tag zu verbessern und zu lernen, nicht zu stoppen.",
         "support.generators.title": "Generatoren",
         // "support.generators.item1": "Generator für ntfy-Benachrichtigungen",
         // "support.generators.item2": "Generator für Mobile-App-Benachrichtigungen",
