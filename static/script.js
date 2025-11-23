@@ -282,3 +282,23 @@ prefersDarkScheme.addEventListener('change', (e) => {
     align-items: center;
     justify-content: center;
 }
+// Banner hide on scroll
+let lastScrollTop = 0;
+const banner = document.querySelector('.banner');
+const navbar = document.querySelector('.navbar');
+const bannerHeight = banner.offsetHeight;
+
+window.addEventListener('scroll', function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollTop > lastScrollTop && scrollTop > bannerHeight) {
+        // Scrolling down & past banner - hide banner
+        banner.style.transform = 'translateY(-100%)';
+        banner.style.transition = 'transform 0.3s ease';
+    } else {
+        // Scrolling up - show banner
+        banner.style.transform = 'translateY(0)';
+    }
+    
+    lastScrollTop = scrollTop;
+});
