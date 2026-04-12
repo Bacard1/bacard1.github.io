@@ -1,1 +1,206 @@
 
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>DSGVO – Information an Ratsfraktionen</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #dde3eb;
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .email-responsive {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 40, 80, 0.15);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* QR Overlay - позициониран върху съдържанието */
+        .qr-overlay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            border: 2px solid #0a3d62;
+            text-align: center;
+            width: 120px;
+        }
+        
+        .qr-label {
+            font-size: 9px;
+            font-weight: bold;
+            color: #0a3d62;
+            margin-bottom: 5px;
+        }
+        
+        .qr-text {
+            font-size: 7px;
+            font-family: monospace;
+            color: #333;
+            margin-top: 5px;
+            word-break: break-all;
+        }
+        
+        .dsgvo-banner {
+            background: linear-gradient(145deg, #0a3d62, #1e4f7a, #0052a0);
+            padding: 25px 30px;
+            color: white;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .dsgvo-logo { font-size: 42px; }
+        .logo-placeholder {
+            font-weight: 800;
+            font-size: 22px;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 40px;
+        }
+        
+        .legal-text { font-size: 13px; line-height: 1.5; }
+        .legal-text p { margin: 12px 0; color: white; }
+        
+        .content { padding: 30px 35px; background: white; }
+        .contact-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #cbd5e1;
+        }
+        
+        .footer {
+            background-color: #e6f0fa;
+            padding: 18px 30px;
+            border-top: 3px solid #000000;
+            font-size: 11px;
+        }
+        
+        .footer .warning-title {
+            font-weight: 700;
+            color: #003d7c;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        @media print {
+            .qr-overlay {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-responsive" style="position: relative;">
+        
+        <!-- QR КОДЪТ КАТО OVERLAY -->
+        <div class="qr-overlay">
+            <div class="qr-label">🔒 DSGVO SIEGEL</div>
+            <div id="qrcode" style="display: flex; justify-content: center;"></div>
+            <div class="qr-text" id="qrId">Wird geladen...</div>
+        </div>
+        
+        <!-- БАНЕР -->
+        <div class="dsgvo-banner">
+            <div class="logo-container">
+                <span class="dsgvo-logo">🛡️</span>
+                <span class="logo-placeholder">DSGVO • RECHTSKONFORM</span>
+            </div>
+            <div class="legal-text">
+                <p style="font-weight: 600;">🏛️ STRENG VERTRAULICH UND DURCH DIE DSGVO (EU) 2016/679 GESCHÜTZT</p>
+                <p>📜 RECHTSGRUNDLAGEN DER DATENÜBERMITTLUNG:<br> 
+                Diese E-Mail enthält personenbezogene Daten. Jegliche Offenlegung durch Dritte ist rechtswidrig.</p>
+                <p>🔐 Die Übermittlung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. e DSGVO i. V. m. § 2 SGB VIII.</p>
+                <p>✒️ RECHTSFOLGEN:<br> 
+                Bei unrechtmäßiger Verarbeitung: Schadensersatz nach Art. 82 DSGVO.</p>
+            </div>
+        </div>
+        
+        <!-- СЪДЪРЖАНИЕ -->
+        <div class="content">
+            <p style="font-weight: 500;">Sehr geehrte Damen und Herren,</p>
+            <p>.......</p>
+            
+            <div class="contact-info">
+                <p>Denislav Pasev<br>Kristiana Belnikolova</p>
+                <p>E-Mail: pasevdenislav@gmail.com</p>
+                <p>Telefon: +49 (0)157 50800967</p>
+                <p>Adresse: Münsterstraße 177, 44145 Dortmund</p>
+            </div>
+        </div>
+        
+        <!-- ФУТЪР -->
+        <div class="footer">
+            <div class="warning-title">⚠️ HAFTUNGSAUSSCHLUSS UND RECHTLICHE FOLGEN</div>
+            <p>Mit dem Empfang erklären Sie sich einverstanden, dass Sie der alleinige Empfänger sind. Im Falle eines Verstoßes werden wir Schadensersatz geltend machen (Art. 82, 83 DSGVO).</p>
+        </div>
+    </div>
+    
+    <!-- QR БИБЛИОТЕКА -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        // Генериране на уникален ID
+        var uniqueId = 'DSGVO-' + Date.now() + '-' + Math.random().toString(36).substring(2, 8);
+        var timestamp = new Date().toISOString();
+        
+        // Данни за QR кода
+        var qrData = JSON.stringify({
+            id: uniqueId,
+            timestamp: timestamp,
+            dokument: "DSGVO_Information_Ratsfraktionen",
+            absender: "Denislav Pasev / Kristiana Belnikolova"
+        });
+        
+        // Изчакване DOM да зареди
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                // Генериране на QR код
+                var qrcodeDiv = document.getElementById('qrcode');
+                if (qrcodeDiv && typeof QRCode !== 'undefined') {
+                    // Изчистване на div
+                    qrcodeDiv.innerHTML = '';
+                    
+                    // Създаване на QR код
+                    new QRCode(qrcodeDiv, {
+                        text: qrData,
+                        width: 90,
+                        height: 90,
+                        colorDark: "#0a3d62",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                    
+                    // Показване на ID
+                    document.getElementById('qrId').innerText = uniqueId.substring(0, 16);
+                    console.log("✅ QR кодът е генериран успешно!");
+                    console.log("📊 Данни:", qrData);
+                } else {
+                    document.getElementById('qrId').innerText = "Грешка: QR библиотеката не зареди";
+                    console.error("QR библиотеката не зареди");
+                }
+            } catch(e) {
+                console.error("Грешка при генериране на QR:", e);
+                document.getElementById('qrId').innerText = "Грешка: " + e.message;
+            }
+        });
+    </script>
+</body>
+</html>
