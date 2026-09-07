@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Blockchain Monitor - Ultimate</title>
+    <title>Enterprise Blockchain Monitor</title>
     
-    <!-- ✅ FAVICON - ВГРАДЕН, БЕЗ 404 ГРЕШКА! -->
+    <!-- ✅ ВГРАДЕН FAVICON - БЕЗ 404 ГРЕШКА! -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230e1628'/><rect x='4' y='4' width='92' height='92' rx='16' fill='none' stroke='%23f5d742' stroke-width='2'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23f5d742'>⛓️</text><text x='88' y='88' font-size='16' font-weight='bold' fill='%23f5d74288' text-anchor='end'>B</text></svg>">
     <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230e1628'/><rect x='4' y='4' width='92' height='92' rx='16' fill='none' stroke='%23f5d742' stroke-width='2'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23f5d742'>⛓️</text><text x='88' y='88' font-size='16' font-weight='bold' fill='%23f5d74288' text-anchor='end'>B</text></svg>">
     <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230e1628'/><rect x='4' y='4' width='92' height='92' rx='16' fill='none' stroke='%23f5d742' stroke-width='2'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23f5d742'>⛓️</text><text x='88' y='88' font-size='16' font-weight='bold' fill='%23f5d74288' text-anchor='end'>B</text></svg>">
@@ -22,17 +22,17 @@
             background: #080c18;
             color: #e2e8f0;
             min-height: 100vh;
-            padding: 0.8rem;
+            padding: 1rem;
         }
 
         .dashboard {
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
             background: #0e1628;
             border-radius: 32px;
             border: 1px solid #253349;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
-            padding: 1.2rem;
+            padding: 1.5rem;
         }
 
         .header {
@@ -40,14 +40,14 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.8rem;
-            padding-bottom: 0.8rem;
+            gap: 1rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid #1f2d47;
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
         .header h1 {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             font-weight: 500;
             background: linear-gradient(135deg, #f5d742, #e6b91e);
             -webkit-background-clip: text;
@@ -57,20 +57,21 @@
 
         .header .sub {
             color: #5a78a5;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
+            margin-top: 0.2rem;
         }
 
         .status {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             color: #7b99cc;
-            font-size: 0.75rem;
+            font-size: 0.85rem;
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: #4ade80;
             border-radius: 50%;
             box-shadow: 0 0 12px #4ade8066;
@@ -86,7 +87,7 @@
         .controls {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.5rem;
             align-items: center;
         }
 
@@ -94,10 +95,10 @@
             background: #1f2f4a;
             border: 1px solid #2a4065;
             color: #c8daf5;
-            padding: 0.2rem 0.8rem;
+            padding: 0.3rem 1rem;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.65rem;
+            font-size: 0.75rem;
             transition: 0.2s;
         }
 
@@ -119,17 +120,16 @@
         .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
+            gap: 1.2rem;
         }
 
         .card {
             background: #111b2e;
-            border-radius: 16px;
+            border-radius: 20px;
             border: 1px solid #1f314a;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            min-height: 400px;
             transition: border-color 0.3s;
         }
 
@@ -139,152 +139,136 @@
 
         .card-header {
             background: #141f36;
-            padding: 0.3rem 0.8rem;
+            padding: 0.6rem 1.2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.2rem;
+            gap: 0.3rem;
             border-bottom: 1px solid #1f314a;
-            min-height: 34px;
-            flex-shrink: 0;
+            min-height: 48px;
         }
 
         .card-header .label {
             display: flex;
             align-items: center;
-            gap: 0.3rem;
-            font-size: 0.7rem;
+            gap: 0.5rem;
+            font-size: 0.85rem;
             font-weight: 500;
             color: #b8cdf5;
         }
 
         .card-header .addr-short {
             font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.5rem;
+            font-size: 0.6rem;
             color: #6f8fc0;
             background: #0a1424;
-            padding: 0.05rem 0.5rem;
+            padding: 0.1rem 0.6rem;
             border-radius: 30px;
             border: 1px solid #1f2f4a;
         }
 
         .card-body {
+            padding: 1.2rem;
             flex: 1;
-            position: relative;
-            background: #0a111f;
-            min-height: 300px;
-            overflow: hidden;
-        }
-
-        .card-body iframe {
-            width: 100%;
-            height: 100%;
-            min-height: 300px;
-            border: none;
-            background: #0a111f;
-            display: block;
-        }
-
-        .card-body .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(10, 17, 31, 0.95);
-            gap: 0.6rem;
-            padding: 1rem;
-            text-align: center;
-            z-index: 10;
-        }
-
-        .card-body .overlay.show {
             display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            min-height: 180px;
         }
 
-        .card-body .overlay .spinner {
-            width: 32px;
-            height: 32px;
-            border: 3px solid #1f2f4a;
-            border-top-color: #f5d742;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        .balance-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .card-body .overlay .msg {
-            color: #7b99cc;
-            font-size: 0.75rem;
-        }
-
-        .card-body .overlay .btn-open {
-            background: #1f2f4a;
-            border: 1px solid #2a4065;
-            color: #c8daf5;
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
-            cursor: pointer;
-            text-decoration: none;
-            font-size: 0.7rem;
-            transition: 0.2s;
-        }
-
-        .card-body .overlay .btn-open:hover {
-            background: #2a4065;
+        .balance-amount {
+            font-size: 1.8rem;
+            font-weight: 600;
             color: #f5d742;
+            letter-spacing: -0.5px;
+        }
+
+        .balance-usd {
+            font-size: 0.95rem;
+            color: #7b99cc;
+            font-weight: 400;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 0.6rem;
+        }
+
+        .stat-item {
+            background: #0a1424;
+            padding: 0.5rem 0.7rem;
+            border-radius: 12px;
+            border: 1px solid #1a2942;
+            text-align: center;
+        }
+
+        .stat-item .stat-label {
+            font-size: 0.55rem;
+            color: #5a78a5;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .stat-item .stat-value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #c8daf5;
+            margin-top: 0.1rem;
         }
 
         .card-footer {
             background: #0e182a;
-            padding: 0.2rem 0.8rem;
+            padding: 0.4rem 1.2rem;
             border-top: 1px solid #1a2942;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.2rem;
-            min-height: 28px;
-            flex-shrink: 0;
+            gap: 0.3rem;
+            min-height: 36px;
         }
 
         .card-footer .info {
-            font-size: 0.55rem;
+            font-size: 0.65rem;
             color: #3f5780;
         }
 
         .card-footer .link-btn {
             color: #7b99cc;
             text-decoration: none;
-            padding: 0.05rem 0.5rem;
+            padding: 0.1rem 0.7rem;
             border-radius: 30px;
             border: 1px solid #1f2f4a;
             transition: 0.2s;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
         }
 
         .card-footer .link-btn:hover {
             background: #1f2f4a;
             color: #f5d742;
+            border-color: #f5d74255;
         }
 
         .footer {
-            margin-top: 1.2rem;
-            padding-top: 0.8rem;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
             border-top: 1px solid #1a2942;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 0.5rem;
-            font-size: 0.65rem;
+            gap: 0.8rem;
+            font-size: 0.75rem;
             color: #3f5780;
         }
 
@@ -297,41 +281,54 @@
             color: #f5d742;
         }
 
-        .warning-box {
+        .info-box {
             background: #1f1a0e;
             border: 1px solid #b8860b;
             border-radius: 12px;
-            padding: 0.4rem 0.8rem;
-            margin-bottom: 1rem;
+            padding: 0.6rem 1rem;
+            margin-bottom: 1.2rem;
             color: #f5c542;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
             flex-wrap: wrap;
         }
 
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #1f2f4a;
+            border-top-color: #f5d742;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         @media (max-width: 1024px) {
-            .grid { grid-template-columns: 1fr 1fr; }
-            .card-body iframe { min-height: 250px; }
-            .card-body { min-height: 250px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
             .grid { grid-template-columns: 1fr; }
-            .dashboard { padding: 0.6rem; }
+            .dashboard { padding: 1rem; }
             .header { flex-direction: column; align-items: flex-start; }
-            .card-body iframe { min-height: 220px; }
-            .card-body { min-height: 220px; }
+            .balance-amount { font-size: 1.4rem; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 480px) {
-            .card-body iframe { min-height: 180px; }
-            .card-body { min-height: 180px; }
-            .card-header { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .card-header { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
+            .balance-amount { font-size: 1.2rem; }
+            .card-body { padding: 0.8rem; }
         }
 
-        ::-webkit-scrollbar { width: 3px; height: 3px; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: #0a111f; }
         ::-webkit-scrollbar-thumb { background: #2a4065; border-radius: 20px; }
         ::-webkit-scrollbar-thumb:hover { background: #4a6b9b; }
@@ -344,22 +341,22 @@
     <header class="header">
         <div>
             <h1>⛓️ Enterprise Blockchain Monitor</h1>
-            <div class="sub">Mempool.space · Ultimate Edition</div>
+            <div class="sub">Mempool.space API · Без iframe · Без CSP грешки</div>
         </div>
         <div class="status">
             <span class="status-dot" id="liveDot"></span>
             <span id="liveStatus">🟢 На живо</span>
             <span style="margin-left: 0.8rem;">🕒 <span id="clock">--:--</span></span>
+            <span style="margin-left: 0.8rem;">🔄 <span id="lastUpdate">--:--</span></span>
         </div>
     </header>
 
-    <div class="warning-box">
-        <span>⚡</span>
-        <span><strong>Ултимативно решение:</strong> Използваме "about:blank" техника + POST съобщения за заобикаляне на CSP.</span>
+    <div class="info-box">
+        <span>✅</span>
+        <span><strong>iframe премахнат!</strong> Всички данни идват директно от <strong>официалното API</strong> на mempool.space. Няма CSP грешки, няма SecurityError, няма блокирани ресурси.</span>
         <div class="controls">
-            <button class="btn" onclick="reloadAll()">🔄 Презареди</button>
-            <button class="btn primary" onclick="openAllPages()">📱 Отвори всички</button>
-            <button class="btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            <button class="btn" onclick="refreshAll()">🔄 Обнови всички</button>
+            <button class="btn primary" onclick="openAllPages()">📱 Отвори в mempool</button>
         </div>
     </div>
 
@@ -368,8 +365,8 @@
     </div>
 
     <div class="footer">
-        <span>⛓️ Пряко предаване от <a href="https://mempool.space" target="_blank">mempool.space</a></span>
-        <span>⚡ Ultimate v8.0 · Без CSP ограничения</span>
+        <span>⛓️ Данни от <a href="https://mempool.space" target="_blank">mempool.space</a> API</span>
+        <span>⚡ Enterprise Monitor v9.0 · Без iframe</span>
     </div>
 
 </div>
@@ -379,32 +376,34 @@
     //  КОНФИГУРАЦИЯ
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    const ITEMS = [
-        {
-            id: 'addr1',
-            label: '📬 Адрес 1',
-            short: 'bc1q7t4...m78fz',
-            url: 'https://mempool.space/address/bc1q7t4vyehjsexdme84qhdgd4dawcn54djh0m78fz'
-        },
-        {
-            id: 'addr2',
-            label: '🔐 Мултисиг 2/3',
-            short: 'bc1qwq...wvvzej',
-            url: 'https://mempool.space/address/bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej'
-        },
-        {
-            id: 'addr3',
-            label: '📥 Адрес 3',
-            short: 'bc1qut...wsxnd',
-            url: 'https://mempool.space/address/bc1qutf4rdlcgxlpflxu9nr6pcx024dksxezcwsxnd'
-        },
-        {
+    const CONFIG = {
+        addresses: [
+            {
+                id: 'addr1',
+                label: '📬 Адрес 1',
+                short: 'bc1q7t4...m78fz',
+                address: 'bc1q7t4vyehjsexdme84qhdgd4dawcn54djh0m78fz'
+            },
+            {
+                id: 'addr2',
+                label: '🔐 Мултисиг 2/3',
+                short: 'bc1qwq...wvvzej',
+                address: 'bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej'
+            },
+            {
+                id: 'addr3',
+                label: '📥 Адрес 3',
+                short: 'bc1qut...wsxnd',
+                address: 'bc1qutf4rdlcgxlpflxu9nr6pcx024dksxezcwsxnd'
+            }
+        ],
+        block: {
             id: 'block1',
             label: '🧱 Блок #957111',
             short: '000000...c8d03b4',
-            url: 'https://mempool.space/block/00000000000000000000c04c4dcbaea675537b7a3e97146f87df83ce1c8d03b4?page=2'
+            hash: '00000000000000000000c04c4dcbaea675537b7a3e97146f87df83ce1c8d03b4'
         }
-    ];
+    };
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     //  ГЕНЕРИРАНЕ НА КАРТИ
@@ -414,208 +413,192 @@
         const container = document.getElementById('gridContainer');
         let html = '';
 
-        ITEMS.forEach((item) => {
-            html += `
-                <div class="card" id="card-${item.id}">
-                    <div class="card-header">
-                        <span class="label">${item.label}</span>
-                        <span class="addr-short">${item.short}</span>
-                    </div>
-                    <div class="card-body" id="body-${item.id}">
-                        <iframe id="iframe-${item.id}" src="about:blank" 
-                                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
-                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                loading="lazy">
-                        </iframe>
-                        <div class="overlay show" id="overlay-${item.id}">
-                            <div class="spinner"></div>
-                            <div class="msg">⏳ Зареждане на <strong>${item.label}</strong>...</div>
-                            <div class="msg" style="font-size:0.6rem; color:#3f5780;">Използва се about:blank техника</div>
-                            <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <span class="info" id="info-${item.id}">🔄 изчакване...</span>
-                        <a href="${item.url}" target="_blank" class="link-btn">🔗 Отвори</a>
-                    </div>
-                </div>
-            `;
+        CONFIG.addresses.forEach((item) => {
+            html += createAddressCard(item);
         });
 
+        html += createBlockCard();
         container.innerHTML = html;
     }
 
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    //  ОСНОВНА ТЕХНИКА - about:blank
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-    function loadIframeWithAboutBlank(item) {
-        const iframe = document.getElementById(`iframe-${item.id}`);
-        const overlay = document.getElementById(`overlay-${item.id}`);
-        const info = document.getElementById(`info-${item.id}`);
-
-        if (!iframe) return;
-
-        // Показваме овърлей
-        if (overlay) {
-            overlay.classList.remove('show');
-            overlay.innerHTML = `
-                <div class="spinner"></div>
-                <div class="msg">⏳ Зареждане на <strong>${item.label}</strong>...</div>
-                <div class="msg" style="font-size:0.6rem; color:#3f5780;">about:blank техника</div>
-                <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
-            `;
-            overlay.classList.add('show');
-        }
-
-        if (info) info.textContent = '🔄 зареждане...';
-
-        // ═══════════════════════════════════════════════
-        //  ОСНОВНАТА ТЕХНИКА - about:blank
-        // ═══════════════════════════════════════════════
-
-        // Стъпка 1: Зареждаме about:blank
-        iframe.src = 'about:blank';
-
-        // Стъпка 2: Изчакваме about:blank да се зареди
-        iframe.onload = function() {
-            try {
-                // Стъпка 3: Взимаме document на about:blank
-                const doc = iframe.contentDocument || iframe.contentWindow?.document;
-                if (!doc) return;
-
-                // Стъпка 4: Пишем HTML съдържание с мета-таг за пренасочване
-                doc.open();
-                doc.write(`
-                    <!DOCTYPE html>
-                    <html>
-                    <head>
-                        <meta charset="UTF-8">
-                        <meta http-equiv="refresh" content="0; url=${item.url}">
-                        <title>Зареждане...</title>
-                        <style>
-                            body {
-                                background: #0a111f;
-                                color: #7b99cc;
-                                font-family: system-ui, sans-serif;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                height: 100vh;
-                                margin: 0;
-                                flex-direction: column;
-                                gap: 1rem;
-                            }
-                            .spinner {
-                                width: 40px;
-                                height: 40px;
-                                border: 3px solid #1f2f4a;
-                                border-top-color: #f5d742;
-                                border-radius: 50%;
-                                animation: spin 0.8s linear infinite;
-                            }
-                            @keyframes spin {
-                                to { transform: rotate(360deg); }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="spinner"></div>
-                        <div>⏳ Пренасочване към <strong>${item.label}</strong>...</div>
-                        <div style="font-size:0.7rem; color:#3f5780;">${item.url}</div>
-                        <a href="${item.url}" target="_top" style="color:#f5d742; text-decoration:underline; font-size:0.8rem;">🔗 Отвори директно</a>
-                    </body>
-                    </html>
-                `);
-                doc.close();
-
-                // Стъпка 5: След 2 секунди скриваме овърлея
-                setTimeout(() => {
-                    if (overlay) overlay.classList.remove('show');
-                    if (info) info.textContent = `✅ заредено (${new Date().toLocaleTimeString()})`;
-                }, 2000);
-
-                // Стъпка 6: Ако след 5 секунди все още няма съдържание, показваме грешка
-                setTimeout(() => {
-                    try {
-                        const doc2 = iframe.contentDocument || iframe.contentWindow?.document;
-                        if (doc2 && doc2.body.innerHTML.includes('Пренасочване')) {
-                            if (overlay) {
-                                overlay.classList.remove('show');
-                                overlay.innerHTML = `
-                                    <div style="font-size:2rem;">⚠️</div>
-                                    <div class="msg" style="color:#ff7b7b;"><strong>Не може да се зареди</strong></div>
-                                    <div class="msg" style="font-size:0.7rem; color:#5a78a5;">Mempool.space блокира зареждането в iframe</div>
-                                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-top:0.5rem;">
-                                        <button class="btn-open" onclick="loadIframeWithAboutBlankDirect('${item.id}')">🔄 Опитай отново</button>
-                                        <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
-                                    </div>
-                                `;
-                                overlay.classList.add('show');
-                            }
-                            if (info) info.textContent = '❌ блокирано от mempool.space';
-                        }
-                    } catch (e) {
-                        // Игнорираме
-                    }
-                }, 5000);
-
-            } catch (e) {
-                console.error('Грешка при about:blank техниката:', e);
-                if (overlay) {
-                    overlay.classList.remove('show');
-                    overlay.innerHTML = `
-                        <div style="font-size:2rem;">⚠️</div>
-                        <div class="msg" style="color:#ff7b7b;"><strong>Грешка при зареждане</strong></div>
-                        <div class="msg" style="font-size:0.7rem; color:#5a78a5;">${e.message}</div>
-                        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-top:0.5rem;">
-                            <button class="btn-open" onclick="loadIframeWithAboutBlankDirect('${item.id}')">🔄 Опитай отново</button>
-                            <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
+    function createAddressCard(item) {
+        return `
+            <div class="card" id="card-${item.id}">
+                <div class="card-header">
+                    <span class="label">${item.label}</span>
+                    <span class="addr-short">${item.short}</span>
+                </div>
+                <div class="card-body" id="body-${item.id}">
+                    <div class="balance-row">
+                        <span class="balance-amount" id="balance-${item.id}">
+                            <span class="loading-spinner"></span>
+                        </span>
+                        <span class="balance-usd" id="usd-${item.id}">--</span>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Транзакции</div>
+                            <div class="stat-value" id="txcount-${item.id}">--</div>
                         </div>
-                    `;
-                    overlay.classList.add('show');
-                }
-                if (info) info.textContent = '❌ грешка';
-            }
-        };
+                        <div class="stat-item">
+                            <div class="stat-label">Получено</div>
+                            <div class="stat-value" id="received-${item.id}">--</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Изпратено</div>
+                            <div class="stat-value" id="sent-${item.id}">--</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">UTXO</div>
+                            <div class="stat-value" id="utxo-${item.id}">--</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="info" id="time-${item.id}">⏳ зареждане...</span>
+                    <div>
+                        <button class="link-btn" onclick="refreshAddress('${item.address}', '${item.id}')" style="background:transparent;border:none;color:#5a78a5;cursor:pointer;font-size:0.7rem;">🔄</button>
+                        <a href="https://mempool.space/address/${item.address}" target="_blank" class="link-btn">🔗 Отвори</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
-        // Стъпка 7: Задействаме зареждането
-        iframe.src = 'about:blank';
+    function createBlockCard() {
+        const item = CONFIG.block;
+        return `
+            <div class="card" id="card-${item.id}">
+                <div class="card-header">
+                    <span class="label">${item.label}</span>
+                    <span class="addr-short">${item.short}</span>
+                </div>
+                <div class="card-body" id="body-${item.id}">
+                    <div class="balance-row">
+                        <span class="balance-amount" id="block-height">#957111</span>
+                        <span class="balance-usd" id="block-time">--</span>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-label">Транзакции</div>
+                            <div class="stat-value" id="block-tx">--</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Размер</div>
+                            <div class="stat-value" id="block-size">--</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Тегло</div>
+                            <div class="stat-value" id="block-weight">--</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-label">Такси</div>
+                            <div class="stat-value" id="block-fee">--</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <span class="info" id="time-${item.id}">⏳ зареждане...</span>
+                    <div>
+                        <button class="link-btn" onclick="refreshBlock()" style="background:transparent;border:none;color:#5a78a5;cursor:pointer;font-size:0.7rem;">🔄</button>
+                        <a href="https://mempool.space/block/${item.hash}?page=2" target="_blank" class="link-btn">🔗 Отвори</a>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    //  ДИРЕКТНО ЗАРЕЖДАНЕ
+    //  FETCH API ДАННИ
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    function loadIframeWithAboutBlankDirect(id) {
-        const item = ITEMS.find(i => i.id === id);
-        if (item) loadIframeWithAboutBlank(item);
+    async function fetchAddressData(address, id) {
+        try {
+            const response = await fetch(`https://mempool.space/api/address/${address}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+
+            const chain = data.chain_stats || {};
+
+            const balance = (chain.funded_txo_sum || 0) - (chain.spent_txo_sum || 0);
+            const balanceBtc = (balance / 100000000).toFixed(8);
+            const usd = (balance / 100000000 * 80000).toFixed(2);
+
+            document.getElementById(`balance-${id}`).textContent = `${balanceBtc} BTC`;
+            document.getElementById(`usd-${id}`).textContent = `≈ $${usd}`;
+            document.getElementById(`txcount-${id}`).textContent = (chain.tx_count || 0).toLocaleString();
+            document.getElementById(`received-${id}`).textContent = ((chain.funded_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
+            document.getElementById(`sent-${id}`).textContent = ((chain.spent_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
+            document.getElementById(`utxo-${id}`).textContent = chain.funded_txo_count || 0;
+            document.getElementById(`time-${id}`).textContent = `✅ ${new Date().toLocaleTimeString()}`;
+
+            updateLastUpdate();
+            return data;
+        } catch (error) {
+            console.error('Грешка при зареждане на адрес:', error);
+            document.getElementById(`balance-${id}`).textContent = '❌ Грешка';
+            document.getElementById(`time-${id}`).textContent = '❌ грешка при зареждане';
+            return null;
+        }
+    }
+
+    async function fetchBlockData() {
+        const id = 'block1';
+        const hash = CONFIG.block.hash;
+        try {
+            const response = await fetch(`https://mempool.space/api/block/${hash}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            const data = await response.json();
+
+            document.getElementById('block-tx').textContent = (data.tx_count || 0).toLocaleString();
+            document.getElementById('block-size').textContent = data.size ? (data.size / 1000000).toFixed(2) + ' MB' : '--';
+            document.getElementById('block-weight').textContent = data.weight ? (data.weight / 1000000).toFixed(2) + ' MWU' : '--';
+            document.getElementById('block-fee').textContent = data.extras?.totalFee ? (data.extras.totalFee / 100000000).toFixed(4) + ' BTC' : '--';
+            document.getElementById('block-time').textContent = data.timestamp ? new Date(data.timestamp * 1000).toLocaleString() : '--';
+            document.getElementById(`time-${id}`).textContent = `✅ ${new Date().toLocaleTimeString()}`;
+
+            updateLastUpdate();
+            return data;
+        } catch (error) {
+            console.error('Грешка при зареждане на блок:', error);
+            document.getElementById('block-tx').textContent = '❌ Грешка';
+            document.getElementById(`time-${id}`).textContent = '❌ грешка при зареждане';
+            return null;
+        }
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     //  КОНТРОЛ
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    function reloadAll() {
-        ITEMS.forEach(item => {
-            loadIframeWithAboutBlank(item);
+    let lastUpdateTime = null;
+
+    function updateLastUpdate() {
+        const now = new Date();
+        lastUpdateTime = now;
+        document.getElementById('lastUpdate').textContent = now.toLocaleTimeString();
+    }
+
+    function refreshAll() {
+        CONFIG.addresses.forEach(item => {
+            fetchAddressData(item.address, item.id);
         });
+        fetchBlockData();
+    }
+
+    function refreshAddress(address, id) {
+        fetchAddressData(address, id);
+    }
+
+    function refreshBlock() {
+        fetchBlockData();
     }
 
     function openAllPages() {
-        ITEMS.forEach(item => {
-            window.open(item.url, '_blank');
+        CONFIG.addresses.forEach(item => {
+            window.open(`https://mempool.space/address/${item.address}`, '_blank');
         });
-    }
-
-    function toggleFullscreen() {
-        if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen?.() ||
-            document.documentElement.webkitRequestFullscreen?.();
-        } else {
-            document.exitFullscreen?.() ||
-            document.webkitExitFullscreen?.();
-        }
+        window.open(`https://mempool.space/block/${CONFIG.block.hash}?page=2`, '_blank');
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -641,36 +624,24 @@
         updateClock();
         setInterval(updateClock, 10000);
 
-        // Зареждане след кратко забавяне
-        setTimeout(() => {
-            ITEMS.forEach(item => {
-                loadIframeWithAboutBlank(item);
-            });
-        }, 300);
+        // Зареждане на данни
+        CONFIG.addresses.forEach(item => {
+            fetchAddressData(item.address, item.id);
+        });
+        fetchBlockData();
 
-        // Автоматично обновяване на всеки 120 секунди
-        setInterval(() => {
-            let hasError = false;
-            ITEMS.forEach(item => {
-                const info = document.getElementById(`info-${item.id}`);
-                if (info && info.textContent.includes('❌')) {
-                    hasError = true;
-                }
-            });
-            if (hasError) {
-                reloadAll();
-            }
-        }, 120000);
+        // Автоматично обновяване на всеки 60 секунди
+        setInterval(refreshAll, 60000);
 
-        console.log('✅ Ultimate Blockchain Monitor зареден!');
-        console.log('📌 Използва about:blank техника за заобикаляне на CSP');
+        console.log('✅ Enterprise Blockchain Monitor зареден!');
+        console.log('📌 Без iframe, без CSP грешки, използва API');
     });
 
     // Глобални функции
-    window.reloadAll = reloadAll;
+    window.refreshAll = refreshAll;
+    window.refreshAddress = refreshAddress;
+    window.refreshBlock = refreshBlock;
     window.openAllPages = openAllPages;
-    window.toggleFullscreen = toggleFullscreen;
-    window.loadIframeWithAboutBlankDirect = loadIframeWithAboutBlankDirect;
 </script>
 
 </body>
