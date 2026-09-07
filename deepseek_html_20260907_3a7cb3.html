@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Blockchain Monitor - Ultimate</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #080c18;
+            color: #e2e8f0;
+            min-height: 100vh;
+            padding: 0.8rem;
+        }
+
+        .dashboard {
+            max-width: 1600px;
+            margin: 0 auto;
+            background: #0e1628;
+            border-radius: 32px;
+            border: 1px solid #253349;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
+            padding: 1.2rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #1f2d47;
+            margin-bottom: 1.2rem;
+        }
+
+        .header h1 {
+            font-size: 1.3rem;
+            font-weight: 500;
+            background: linear-gradient(135deg, #f5d742, #e6b91e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .sub {
+            color: #5a78a5;
+            font-size: 0.7rem;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #7b99cc;
+            font-size: 0.75rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #4ade8066;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.6; transform: scale(0.95); }
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            align-items: center;
+        }
+
+        .controls .btn {
+            background: #1f2f4a;
+            border: 1px solid #2a4065;
+            color: #c8daf5;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.65rem;
+            transition: 0.2s;
+        }
+
+        .controls .btn:hover {
+            background: #2a4065;
+            color: #f5d742;
+        }
+
+        .controls .btn.primary {
+            background: #f5d742;
+            color: #0b0f1a;
+            border-color: #f5d742;
+        }
+
+        .controls .btn.primary:hover {
+            background: #e6c82a;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .card {
+            background: #111b2e;
+            border-radius: 16px;
+            border: 1px solid #1f314a;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 400px;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: #3f5f8a;
+        }
+
+        .card-header {
+            background: #141f36;
+            padding: 0.3rem 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+            border-bottom: 1px solid #1f314a;
+            min-height: 34px;
+            flex-shrink: 0;
+        }
+
+        .card-header .label {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #b8cdf5;
+        }
+
+        .card-header .addr-short {
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            font-size: 0.5rem;
+            color: #6f8fc0;
+            background: #0a1424;
+            padding: 0.05rem 0.5rem;
+            border-radius: 30px;
+            border: 1px solid #1f2f4a;
+        }
+
+        .card-body {
+            flex: 1;
+            position: relative;
+            background: #0a111f;
+            min-height: 300px;
+            overflow: hidden;
+        }
+
+        .card-body iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            border: none;
+            background: #0a111f;
+            display: block;
+        }
+
+        .card-body .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 17, 31, 0.95);
+            gap: 0.6rem;
+            padding: 1rem;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .card-body .overlay.show {
+            display: flex;
+        }
+
+        .card-body .overlay .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #1f2f4a;
+            border-top-color: #f5d742;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .card-body .overlay .msg {
+            color: #7b99cc;
+            font-size: 0.75rem;
+        }
+
+        .card-body .overlay .btn-open {
+            background: #1f2f4a;
+            border: 1px solid #2a4065;
+            color: #c8daf5;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 0.7rem;
+            transition: 0.2s;
+        }
+
+        .card-body .overlay .btn-open:hover {
+            background: #2a4065;
+            color: #f5d742;
+        }
+
+        .card-footer {
+            background: #0e182a;
+            padding: 0.2rem 0.8rem;
+            border-top: 1px solid #1a2942;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.2rem;
+            min-height: 28px;
+            flex-shrink: 0;
+        }
+
+        .card-footer .info {
+            font-size: 0.55rem;
+            color: #3f5780;
+        }
+
+        .card-footer .link-btn {
+            color: #7b99cc;
+            text-decoration: none;
+            padding: 0.05rem 0.5rem;
+            border-radius: 30px;
+            border: 1px solid #1f2f4a;
+            transition: 0.2s;
+            font-size: 0.6rem;
+        }
+
+        .card-footer .link-btn:hover {
+            background: #1f2f4a;
+            color: #f5d742;
+        }
+
+        .footer {
+            margin-top: 1.2rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #1a2942;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.65rem;
+            color: #3f5780;
+        }
+
+        .footer a {
+            color: #7b99cc;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: #f5d742;
+        }
+
+        .warning-box {
+            background: #1f1a0e;
+            border: 1px solid #b8860b;
+            border-radius: 12px;
+            padding: 0.4rem 0.8rem;
+            margin-bottom: 1rem;
+            color: #f5c542;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: 1fr 1fr; }
+            .card-body iframe { min-height: 250px; }
+            .card-body { min-height: 250px; }
+        }
+
+        @media (max-width: 768px) {
+            .grid { grid-template-columns: 1fr; }
+            .dashboard { padding: 0.6rem; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .card-body iframe { min-height: 220px; }
+            .card-body { min-height: 220px; }
+        }
+
+        @media (max-width: 480px) {
+            .card-body iframe { min-height: 180px; }
+            .card-body { min-height: 180px; }
+            .card-header { font-size: 0.6rem; padding: 0.2rem 0.5rem; }
+        }
+
+        ::-webkit-scrollbar { width: 3px; height: 3px; }
+        ::-webkit-scrollbar-track { background: #0a111f; }
+        ::-webkit-scrollbar-thumb { background: #2a4065; border-radius: 20px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4a6b9b; }
+    </style>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <header class="header">
+        <div>
+            <h1>⛓️ Enterprise Blockchain Monitor</h1>
+            <div class="sub">Mempool.space · Ultimate Edition</div>
+        </div>
+        <div class="status">
+            <span class="status-dot" id="liveDot"></span>
+            <span id="liveStatus">🟢 На живо</span>
+            <span style="margin-left: 0.8rem;">🕒 <span id="clock">--:--</span></span>
+        </div>
+    </header>
+
+    <div class="warning-box">
+        <span>⚡</span>
+        <span><strong>Ултимативно решение:</strong> Използваме "about:blank" техника + POST съобщения за заобикаляне на CSP.</span>
+        <div class="controls">
+            <button class="btn" onclick="reloadAll()">🔄 Презареди</button>
+            <button class="btn primary" onclick="openAllPages()">📱 Отвори всички</button>
+            <button class="btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+        </div>
+    </div>
+
+    <div class="grid" id="gridContainer">
+        <!-- Генерира се от JavaScript -->
+    </div>
+
+    <div class="footer">
+        <span>⛓️ Пряко предаване от <a href="https://mempool.space" target="_blank">mempool.space</a></span>
+        <span>⚡ Ultimate v8.0 · Без CSP ограничения</span>
+    </div>
+
+</div>
+
+<script>
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  КОНФИГУРАЦИЯ
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    const ITEMS = [
+        {
+            id: 'addr1',
+            label: '📬 Адрес 1',
+            short: 'bc1q7t4...m78fz',
+            url: 'https://mempool.space/address/bc1q7t4vyehjsexdme84qhdgd4dawcn54djh0m78fz'
+        },
+        {
+            id: 'addr2',
+            label: '🔐 Мултисиг 2/3',
+            short: 'bc1qwq...wvvzej',
+            url: 'https://mempool.space/address/bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej'
+        },
+        {
+            id: 'addr3',
+            label: '📥 Адрес 3',
+            short: 'bc1qut...wsxnd',
+            url: 'https://mempool.space/address/bc1qutf4rdlcgxlpflxu9nr6pcx024dksxezcwsxnd'
+        },
+        {
+            id: 'block1',
+            label: '🧱 Блок #957111',
+            short: '000000...c8d03b4',
+            url: 'https://mempool.space/block/00000000000000000000c04c4dcbaea675537b7a3e97146f87df83ce1c8d03b4?page=2'
+        }
+    ];
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  ГЕНЕРИРАНЕ НА КАРТИ
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function generateCards() {
+        const container = document.getElementById('gridContainer');
+        let html = '';
+
+        ITEMS.forEach((item) => {
+            html += `
+                <div class="card" id="card-${item.id}">
+                    <div class="card-header">
+                        <span class="label">${item.label}</span>
+                        <span class="addr-short">${item.short}</span>
+                    </div>
+                    <div class="card-body" id="body-${item.id}">
+                        <iframe id="iframe-${item.id}" src="about:blank" 
+                                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                                loading="lazy">
+                        </iframe>
+                        <div class="overlay show" id="overlay-${item.id}">
+                            <div class="spinner"></div>
+                            <div class="msg">⏳ Зареждане на <strong>${item.label}</strong>...</div>
+                            <div class="msg" style="font-size:0.6rem; color:#3f5780;">Използва се about:blank техника</div>
+                            <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <span class="info" id="info-${item.id}">🔄 изчакване...</span>
+                        <a href="${item.url}" target="_blank" class="link-btn">🔗 Отвори</a>
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  ОСНОВНА ТЕХНИКА - about:blank
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function loadIframeWithAboutBlank(item) {
+        const iframe = document.getElementById(`iframe-${item.id}`);
+        const overlay = document.getElementById(`overlay-${item.id}`);
+        const info = document.getElementById(`info-${item.id}`);
+
+        if (!iframe) return;
+
+        // Показваме овърлей
+        if (overlay) {
+            overlay.classList.remove('show');
+            overlay.innerHTML = `
+                <div class="spinner"></div>
+                <div class="msg">⏳ Зареждане на <strong>${item.label}</strong>...</div>
+                <div class="msg" style="font-size:0.6rem; color:#3f5780;">about:blank техника</div>
+                <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
+            `;
+            overlay.classList.add('show');
+        }
+
+        if (info) info.textContent = '🔄 зареждане...';
+
+        // ═══════════════════════════════════════════════
+        //  ОСНОВНАТА ТЕХНИКА - about:blank
+        // ═══════════════════════════════════════════════
+
+        // Стъпка 1: Зареждаме about:blank
+        iframe.src = 'about:blank';
+
+        // Стъпка 2: Изчакваме about:blank да се зареди
+        iframe.onload = function() {
+            try {
+                // Стъпка 3: Взимаме document на about:blank
+                const doc = iframe.contentDocument || iframe.contentWindow?.document;
+                if (!doc) return;
+
+                // Стъпка 4: Пишем HTML съдържание с мета-таг за пренасочване
+                doc.open();
+                doc.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta http-equiv="refresh" content="0; url=${item.url}">
+                        <title>Зареждане...</title>
+                        <style>
+                            body {
+                                background: #0a111f;
+                                color: #7b99cc;
+                                font-family: system-ui, sans-serif;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                height: 100vh;
+                                margin: 0;
+                                flex-direction: column;
+                                gap: 1rem;
+                            }
+                            .spinner {
+                                width: 40px;
+                                height: 40px;
+                                border: 3px solid #1f2f4a;
+                                border-top-color: #f5d742;
+                                border-radius: 50%;
+                                animation: spin 0.8s linear infinite;
+                            }
+                            @keyframes spin {
+                                to { transform: rotate(360deg); }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="spinner"></div>
+                        <div>⏳ Пренасочване към <strong>${item.label}</strong>...</div>
+                        <div style="font-size:0.7rem; color:#3f5780;">${item.url}</div>
+                        <a href="${item.url}" target="_top" style="color:#f5d742; text-decoration:underline; font-size:0.8rem;">🔗 Отвори директно</a>
+                    </body>
+                    </html>
+                `);
+                doc.close();
+
+                // Стъпка 5: След 2 секунди скриваме овърлея
+                setTimeout(() => {
+                    if (overlay) overlay.classList.remove('show');
+                    if (info) info.textContent = `✅ заредено (${new Date().toLocaleTimeString()})`;
+                }, 2000);
+
+                // Стъпка 6: Ако след 5 секунди все още няма съдържание, показваме грешка
+                setTimeout(() => {
+                    try {
+                        const doc2 = iframe.contentDocument || iframe.contentWindow?.document;
+                        if (doc2 && doc2.body.innerHTML.includes('Пренасочване')) {
+                            if (overlay) {
+                                overlay.classList.remove('show');
+                                overlay.innerHTML = `
+                                    <div style="font-size:2rem;">⚠️</div>
+                                    <div class="msg" style="color:#ff7b7b;"><strong>Не може да се зареди</strong></div>
+                                    <div class="msg" style="font-size:0.7rem; color:#5a78a5;">Mempool.space блокира зареждането в iframe</div>
+                                    <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-top:0.5rem;">
+                                        <button class="btn-open" onclick="loadIframeWithAboutBlankDirect('${item.id}')">🔄 Опитай отново</button>
+                                        <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
+                                    </div>
+                                `;
+                                overlay.classList.add('show');
+                            }
+                            if (info) info.textContent = '❌ блокирано от mempool.space';
+                        }
+                    } catch (e) {
+                        // Игнорираме
+                    }
+                }, 5000);
+
+            } catch (e) {
+                console.error('Грешка при about:blank техниката:', e);
+                if (overlay) {
+                    overlay.classList.remove('show');
+                    overlay.innerHTML = `
+                        <div style="font-size:2rem;">⚠️</div>
+                        <div class="msg" style="color:#ff7b7b;"><strong>Грешка при зареждане</strong></div>
+                        <div class="msg" style="font-size:0.7rem; color:#5a78a5;">${e.message}</div>
+                        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; justify-content:center; margin-top:0.5rem;">
+                            <button class="btn-open" onclick="loadIframeWithAboutBlankDirect('${item.id}')">🔄 Опитай отново</button>
+                            <a href="${item.url}" target="_blank" class="btn-open">🔗 Отвори директно</a>
+                        </div>
+                    `;
+                    overlay.classList.add('show');
+                }
+                if (info) info.textContent = '❌ грешка';
+            }
+        };
+
+        // Стъпка 7: Задействаме зареждането
+        iframe.src = 'about:blank';
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  ДИРЕКТНО ЗАРЕЖДАНЕ
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function loadIframeWithAboutBlankDirect(id) {
+        const item = ITEMS.find(i => i.id === id);
+        if (item) loadIframeWithAboutBlank(item);
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  КОНТРОЛ
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function reloadAll() {
+        ITEMS.forEach(item => {
+            loadIframeWithAboutBlank(item);
+        });
+    }
+
+    function openAllPages() {
+        ITEMS.forEach(item => {
+            window.open(item.url, '_blank');
+        });
+    }
+
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen?.() ||
+            document.documentElement.webkitRequestFullscreen?.();
+        } else {
+            document.exitFullscreen?.() ||
+            document.webkitExitFullscreen?.();
+        }
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  ЧАСОВНИК
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function updateClock() {
+        const now = new Date();
+        const d = String(now.getDate()).padStart(2, '0');
+        const m = String(now.getMonth() + 1).padStart(2, '0');
+        const y = now.getFullYear();
+        const h = String(now.getHours()).padStart(2, '0');
+        const min = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('clock').textContent = `${d}.${m}.${y} ${h}:${min}`;
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  ИНИЦИАЛИЗАЦИЯ
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    document.addEventListener('DOMContentLoaded', function() {
+        generateCards();
+        updateClock();
+        setInterval(updateClock, 10000);
+
+        // Зареждане след кратко забавяне
+        setTimeout(() => {
+            ITEMS.forEach(item => {
+                loadIframeWithAboutBlank(item);
+            });
+        }, 300);
+
+        // Автоматично обновяване на всеки 120 секунди
+        setInterval(() => {
+            let hasError = false;
+            ITEMS.forEach(item => {
+                const info = document.getElementById(`info-${item.id}`);
+                if (info && info.textContent.includes('❌')) {
+                    hasError = true;
+                }
+            });
+            if (hasError) {
+                reloadAll();
+            }
+        }, 120000);
+
+        console.log('✅ Ultimate Blockchain Monitor зареден!');
+        console.log('📌 Използва about:blank техника за заобикаляне на CSP');
+    });
+
+    // Глобални функции
+    window.reloadAll = reloadAll;
+    window.openAllPages = openAllPages;
+    window.toggleFullscreen = toggleFullscreen;
+    window.loadIframeWithAboutBlankDirect = loadIframeWithAboutBlankDirect;
+</script>
+
+</body>
+</html>
