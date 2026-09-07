@@ -131,6 +131,7 @@
             display: flex;
             flex-direction: column;
             transition: border-color 0.3s;
+            min-height: 220px;
         }
 
         .card:hover {
@@ -174,7 +175,6 @@
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
-            min-height: 180px;
         }
 
         .balance-row {
@@ -251,6 +251,8 @@
             border: 1px solid #1f2f4a;
             transition: 0.2s;
             font-size: 0.7rem;
+            background: transparent;
+            cursor: pointer;
         }
 
         .card-footer .link-btn:hover {
@@ -307,6 +309,10 @@
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        .error-text {
+            color: #ff7b7b;
         }
 
         @media (max-width: 1024px) {
@@ -457,7 +463,7 @@
                 <div class="card-footer">
                     <span class="info" id="time-${item.id}">⏳ зареждане...</span>
                     <div>
-                        <button class="link-btn" onclick="refreshAddress('${item.address}', '${item.id}')" style="background:transparent;border:none;color:#5a78a5;cursor:pointer;font-size:0.7rem;">🔄</button>
+                        <button class="link-btn" onclick="refreshAddress('${item.address}', '${item.id}')">🔄</button>
                         <a href="https://mempool.space/address/${item.address}" target="_blank" class="link-btn">🔗 Отвори</a>
                     </div>
                 </div>
@@ -500,7 +506,7 @@
                 <div class="card-footer">
                     <span class="info" id="time-${item.id}">⏳ зареждане...</span>
                     <div>
-                        <button class="link-btn" onclick="refreshBlock()" style="background:transparent;border:none;color:#5a78a5;cursor:pointer;font-size:0.7rem;">🔄</button>
+                        <button class="link-btn" onclick="refreshBlock()">🔄</button>
                         <a href="https://mempool.space/block/${item.hash}?page=2" target="_blank" class="link-btn">🔗 Отвори</a>
                     </div>
                 </div>
@@ -513,31 +519,38 @@
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     async function fetchAddressData(address, id) {
+        const balanceEl = document.getElementById(`balance-${id}`);
+        const usdEl = document.getElementById(`usd-${id}`);
+        const txEl = document.getElementById(`txcount-${id}`);
+        const recEl = document.getElementById(`received-${id}`);
+        const sentEl = document.getElementById(`sent-${id}`);
+        const utxoEl = document.getElementById(`utxo-${id}`);
+        const timeEl = document.getElementById(`time-${id}`);
+
         try {
             const response = await fetch(`https://mempool.space/api/address/${address}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
 
             const chain = data.chain_stats || {};
-
             const balance = (chain.funded_txo_sum || 0) - (chain.spent_txo_sum || 0);
             const balanceBtc = (balance / 100000000).toFixed(8);
             const usd = (balance / 100000000 * 80000).toFixed(2);
 
-            document.getElementById(`balance-${id}`).textContent = `${balanceBtc} BTC`;
-            document.getElementById(`usd-${id}`).textContent = `≈ $${usd}`;
-            document.getElementById(`txcount-${id}`).textContent = (chain.tx_count || 0).toLocaleString();
-            document.getElementById(`received-${id}`).textContent = ((chain.funded_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
-            document.getElementById(`sent-${id}`).textContent = ((chain.spent_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
-            document.getElementById(`utxo-${id}`).textContent = chain.funded_txo_count || 0;
-            document.getElementById(`time-${id}`).textContent = `✅ ${new Date().toLocaleTimeString()}`;
+            if (balanceEl) balanceEl.textContent = `${balanceBtc} BTC`;
+            if (usdEl) usdEl.textContent = `≈ $${usd}`;
+            if (txEl) txEl.textContent = (chain.tx_count || 0).toLocaleString();
+            if (recEl) recEl.textContent = ((chain.funded_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
+            if (sentEl) sentEl.textContent = ((chain.spent_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
+            if (utxoEl) utxoEl.textContent = chain.funded_txo_count || 0;
+            if (timeEl) timeEl.textContent = `✅ ${new Date().toLocaleTimeString()}`;
 
             updateLastUpdate();
             return data;
         } catch (error) {
             console.error('Грешка при зареждане на адрес:', error);
-            document.getElementById(`balance-${id}`).textContent = '❌ Грешка';
-            document.getElementById(`time-${id}`).textContent = '❌ грешка при зареждане';
+            if (balanceEl) balanceEl.textContent = '❌ Грешка';
+            if (timeEl) timeEl.textContent = '❌ грешка при зареждане';
             return null;
         }
     }
@@ -545,24 +558,32 @@
     async function fetchBlockData() {
         const id = 'block1';
         const hash = CONFIG.block.hash;
+        
+        const txEl = document.getElementById('block-tx');
+        const sizeEl = document.getElementById('block-size');
+        const weightEl = document.getElementById('block-weight');
+        const feeEl = document.getElementById('block-fee');
+        const timeEl = document.getElementById(`time-${id}`);
+        const blockTimeEl = document.getElementById('block-time');
+
         try {
             const response = await fetch(`https://mempool.space/api/block/${hash}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
 
-            document.getElementById('block-tx').textContent = (data.tx_count || 0).toLocaleString();
-            document.getElementById('block-size').textContent = data.size ? (data.size / 1000000).toFixed(2) + ' MB' : '--';
-            document.getElementById('block-weight').textContent = data.weight ? (data.weight / 1000000).toFixed(2) + ' MWU' : '--';
-            document.getElementById('block-fee').textContent = data.extras?.totalFee ? (data.extras.totalFee / 100000000).toFixed(4) + ' BTC' : '--';
-            document.getElementById('block-time').textContent = data.timestamp ? new Date(data.timestamp * 1000).toLocaleString() : '--';
-            document.getElementById(`time-${id}`).textContent = `✅ ${new Date().toLocaleTimeString()}`;
+            if (txEl) txEl.textContent = (data.tx_count || 0).toLocaleString();
+            if (sizeEl) sizeEl.textContent = data.size ? (data.size / 1000000).toFixed(2) + ' MB' : '--';
+            if (weightEl) weightEl.textContent = data.weight ? (data.weight / 1000000).toFixed(2) + ' MWU' : '--';
+            if (feeEl) feeEl.textContent = data.extras?.totalFee ? (data.extras.totalFee / 100000000).toFixed(4) + ' BTC' : '--';
+            if (blockTimeEl) blockTimeEl.textContent = data.timestamp ? new Date(data.timestamp * 1000).toLocaleString() : '--';
+            if (timeEl) timeEl.textContent = `✅ ${new Date().toLocaleTimeString()}`;
 
             updateLastUpdate();
             return data;
         } catch (error) {
             console.error('Грешка при зареждане на блок:', error);
-            document.getElementById('block-tx').textContent = '❌ Грешка';
-            document.getElementById(`time-${id}`).textContent = '❌ грешка при зареждане';
+            if (txEl) txEl.textContent = '❌ Грешка';
+            if (timeEl) timeEl.textContent = '❌ грешка при зареждане';
             return null;
         }
     }
@@ -571,11 +592,8 @@
     //  КОНТРОЛ
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    let lastUpdateTime = null;
-
     function updateLastUpdate() {
         const now = new Date();
-        lastUpdateTime = now;
         document.getElementById('lastUpdate').textContent = now.toLocaleTimeString();
     }
 
