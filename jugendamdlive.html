@@ -3,376 +3,259 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enterprise Blockchain Monitor</title>
+    <title>Mempool Live - Директно вграждане</title>
     
-    <!-- ✅ ВГРАДЕН FAVICON - БЕЗ 404 ГРЕШКА! -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230e1628'/><rect x='4' y='4' width='92' height='92' rx='16' fill='none' stroke='%23f5d742' stroke-width='2'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23f5d742'>⛓️</text><text x='88' y='88' font-size='16' font-weight='bold' fill='%23f5d74288' text-anchor='end'>B</text></svg>">
-    <link rel="shortcut icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230e1628'/><rect x='4' y='4' width='92' height='92' rx='16' fill='none' stroke='%23f5d742' stroke-width='2'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23f5d742'>⛓️</text><text x='88' y='88' font-size='16' font-weight='bold' fill='%23f5d74288' text-anchor='end'>B</text></svg>">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230e1628'/><rect x='4' y='4' width='92' height='92' rx='16' fill='none' stroke='%23f5d742' stroke-width='2'/><text x='50' y='72' font-size='64' text-anchor='middle' fill='%23f5d742'>⛓️</text><text x='88' y='88' font-size='16' font-weight='bold' fill='%23f5d74288' text-anchor='end'>B</text></svg>">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-        }
-
-        body {
-            background: #080c18;
-            color: #e2e8f0;
-            min-height: 100vh;
-            padding: 1rem;
-        }
-
-        .dashboard {
-            max-width: 1400px;
-            margin: 0 auto;
-            background: #0e1628;
-            border-radius: 32px;
-            border: 1px solid #253349;
-            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.9);
-            padding: 1.5rem;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #080c18; color: #e2e8f0; font-family: system-ui, sans-serif; padding: 0.5rem; }
+        .container { max-width: 100%; margin: 0 auto; }
+        
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #1f2d47;
-            margin-bottom: 1.5rem;
-        }
-
-        .header h1 {
-            font-size: 1.5rem;
-            font-weight: 500;
-            background: linear-gradient(135deg, #f5d742, #e6b91e);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .header .sub {
-            color: #5a78a5;
-            font-size: 0.8rem;
-            margin-top: 0.2rem;
-        }
-
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            color: #7b99cc;
-            font-size: 0.85rem;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            background: #4ade80;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #4ade8066;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.6; transform: scale(0.95); }
-            50% { opacity: 1; transform: scale(1.1); }
-            100% { opacity: 0.6; transform: scale(0.95); }
-        }
-
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
             gap: 0.5rem;
-            align-items: center;
+            padding: 0.5rem 1rem;
+            background: #0e1628;
+            border-radius: 16px;
+            border: 1px solid #253349;
+            margin-bottom: 0.5rem;
         }
-
-        .controls .btn {
+        
+        .header h1 { font-size: 1.2rem; color: #f5d742; }
+        .header .status { display: flex; align-items: center; gap: 0.5rem; color: #7b99cc; font-size: 0.8rem; }
+        .status-dot { width: 8px; height: 8px; background: #4ade80; border-radius: 50%; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        
+        .controls { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+        .controls button {
             background: #1f2f4a;
             border: 1px solid #2a4065;
             color: #c8daf5;
-            padding: 0.3rem 1rem;
+            padding: 0.2rem 0.8rem;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             transition: 0.2s;
         }
-
-        .controls .btn:hover {
-            background: #2a4065;
-            color: #f5d742;
-        }
-
-        .controls .btn.primary {
-            background: #f5d742;
-            color: #0b0f1a;
-            border-color: #f5d742;
-        }
-
-        .controls .btn.primary:hover {
-            background: #e6c82a;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-        }
-
-        .card {
-            background: #111b2e;
-            border-radius: 20px;
-            border: 1px solid #1f314a;
-            overflow: hidden;
+        .controls button:hover { background: #2a4065; color: #f5d742; }
+        .controls button.primary { background: #f5d742; color: #0b0f1a; border-color: #f5d742; }
+        .controls button.primary:hover { background: #e6c82a; }
+        .controls button.danger { background: #6b2a2a; border-color: #8a3a3a; }
+        .controls button.danger:hover { background: #8a3a3a; }
+        
+        .mode-selector {
             display: flex;
-            flex-direction: column;
-            transition: border-color 0.3s;
-            min-height: 220px;
-        }
-
-        .card:hover {
-            border-color: #3f5f8a;
-        }
-
-        .card-header {
-            background: #141f36;
-            padding: 0.6rem 1.2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
             gap: 0.3rem;
-            border-bottom: 1px solid #1f314a;
-            min-height: 48px;
-        }
-
-        .card-header .label {
-            display: flex;
             align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #b8cdf5;
-        }
-
-        .card-header .addr-short {
-            font-family: 'JetBrains Mono', 'Fira Code', monospace;
-            font-size: 0.6rem;
-            color: #6f8fc0;
             background: #0a1424;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            border: 1px solid #1a2942;
+        }
+        .mode-selector button {
+            background: transparent;
+            border: none;
+            color: #5a78a5;
             padding: 0.1rem 0.6rem;
             border-radius: 30px;
-            border: 1px solid #1f2f4a;
+            cursor: pointer;
+            font-size: 0.65rem;
+            transition: 0.2s;
         }
-
-        .card-body {
-            padding: 1.2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .balance-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .balance-amount {
-            font-size: 1.8rem;
-            font-weight: 600;
+        .mode-selector button.active {
+            background: #1f2f4a;
             color: #f5d742;
-            letter-spacing: -0.5px;
         }
-
-        .balance-usd {
-            font-size: 0.95rem;
-            color: #7b99cc;
-            font-weight: 400;
+        .mode-selector button:hover { color: #f5d742; }
+        
+        .iframe-wrapper {
+            background: #0a111f;
+            border-radius: 16px;
+            border: 1px solid #1f314a;
+            overflow: hidden;
+            height: calc(100vh - 140px);
+            min-height: 400px;
+            position: relative;
         }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-            gap: 0.6rem;
+        
+        .iframe-wrapper iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #0a111f;
         }
-
-        .stat-item {
-            background: #0a1424;
-            padding: 0.5rem 0.7rem;
+        
+        .iframe-wrapper .fallback {
+            display: none;
+            width: 100%;
+            height: 100%;
+            padding: 1.5rem;
+            overflow-y: auto;
+            background: #0a111f;
+        }
+        
+        .iframe-wrapper .fallback.active {
+            display: block;
+        }
+        
+        .iframe-wrapper .fallback .api-card {
+            background: #111b2e;
             border-radius: 12px;
-            border: 1px solid #1a2942;
-            text-align: center;
+            border: 1px solid #1f314a;
+            padding: 1rem;
+            margin-bottom: 0.8rem;
         }
-
-        .stat-item .stat-label {
+        
+        .iframe-wrapper .fallback .api-card .balance {
+            font-size: 1.8rem;
+            color: #f5d742;
+            font-weight: 600;
+        }
+        
+        .iframe-wrapper .fallback .api-card .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .iframe-wrapper .fallback .api-card .stat {
+            background: #0a1424;
+            padding: 0.4rem 0.6rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #1a2942;
+        }
+        
+        .iframe-wrapper .fallback .api-card .stat .label {
             font-size: 0.55rem;
             color: #5a78a5;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
         }
-
-        .stat-item .stat-value {
-            font-size: 0.9rem;
-            font-weight: 500;
+        
+        .iframe-wrapper .fallback .api-card .stat .value {
+            font-size: 0.85rem;
             color: #c8daf5;
-            margin-top: 0.1rem;
+            font-weight: 500;
         }
-
-        .card-footer {
-            background: #0e182a;
-            padding: 0.4rem 1.2rem;
-            border-top: 1px solid #1a2942;
+        
+        .iframe-wrapper .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 0.3rem;
-            min-height: 36px;
+            justify-content: center;
+            background: rgba(10, 17, 31, 0.92);
+            gap: 0.5rem;
+            z-index: 10;
+            pointer-events: none;
         }
-
-        .card-footer .info {
-            font-size: 0.65rem;
-            color: #3f5780;
-        }
-
-        .card-footer .link-btn {
-            color: #7b99cc;
-            text-decoration: none;
-            padding: 0.1rem 0.7rem;
-            border-radius: 30px;
-            border: 1px solid #1f2f4a;
-            transition: 0.2s;
-            font-size: 0.7rem;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .card-footer .link-btn:hover {
-            background: #1f2f4a;
-            color: #f5d742;
-            border-color: #f5d74255;
-        }
-
-        .footer {
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid #1a2942;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            font-size: 0.75rem;
-            color: #3f5780;
-        }
-
-        .footer a {
-            color: #7b99cc;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            color: #f5d742;
-        }
-
-        .info-box {
-            background: #1f1a0e;
-            border: 1px solid #b8860b;
-            border-radius: 12px;
-            padding: 0.6rem 1rem;
-            margin-bottom: 1.2rem;
-            color: #f5c542;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid #1f2f4a;
+        
+        .iframe-wrapper .overlay.hidden { display: none; }
+        .iframe-wrapper .overlay .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #1f2f4a;
             border-top-color: #f5d742;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .iframe-wrapper .overlay .msg { color: #7b99cc; font-size: 0.85rem; }
+        
+        .footer {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #0e1628;
+            border-radius: 16px;
+            border: 1px solid #253349;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            color: #3f5780;
         }
-
-        .error-text {
-            color: #ff7b7b;
+        .footer a { color: #7b99cc; text-decoration: none; }
+        .footer a:hover { color: #f5d742; }
+        
+        .warning {
+            background: #1f1a0e;
+            border: 1px solid #b8860b;
+            border-radius: 12px;
+            padding: 0.4rem 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #f5c542;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
         }
-
-        @media (max-width: 1024px) {
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-        }
-
+        
         @media (max-width: 768px) {
-            .grid { grid-template-columns: 1fr; }
-            .dashboard { padding: 1rem; }
-            .header { flex-direction: column; align-items: flex-start; }
-            .balance-amount { font-size: 1.4rem; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .iframe-wrapper { height: calc(100vh - 200px); min-height: 300px; }
+            .header h1 { font-size: 1rem; }
+            .iframe-wrapper .fallback .api-card .stats { grid-template-columns: 1fr 1fr; }
         }
-
-        @media (max-width: 480px) {
-            .stats-grid { grid-template-columns: 1fr; }
-            .card-header { font-size: 0.7rem; padding: 0.4rem 0.8rem; }
-            .balance-amount { font-size: 1.2rem; }
-            .card-body { padding: 0.8rem; }
-        }
-
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
-        ::-webkit-scrollbar-track { background: #0a111f; }
-        ::-webkit-scrollbar-thumb { background: #2a4065; border-radius: 20px; }
-        ::-webkit-scrollbar-thumb:hover { background: #4a6b9b; }
     </style>
 </head>
 <body>
 
-<div class="dashboard">
+<div class="container">
 
-    <header class="header">
-        <div>
-            <h1>⛓️ Enterprise Blockchain Monitor</h1>
-            <div class="sub">Mempool.space API · Без iframe · Без CSP грешки</div>
-        </div>
+    <div class="header">
+        <h1>⛓️ Mempool Live</h1>
         <div class="status">
             <span class="status-dot" id="liveDot"></span>
             <span id="liveStatus">🟢 На живо</span>
-            <span style="margin-left: 0.8rem;">🕒 <span id="clock">--:--</span></span>
-            <span style="margin-left: 0.8rem;">🔄 <span id="lastUpdate">--:--</span></span>
+            <span>🕒 <span id="clock">--:--</span></span>
         </div>
-    </header>
-
-    <div class="info-box">
-        <span>✅</span>
-        <span><strong>iframe премахнат!</strong> Всички данни идват директно от <strong>официалното API</strong> на mempool.space. Няма CSP грешки, няма SecurityError, няма блокирани ресурси.</span>
         <div class="controls">
-            <button class="btn" onclick="refreshAll()">🔄 Обнови всички</button>
-            <button class="btn primary" onclick="openAllPages()">📱 Отвори в mempool</button>
+            <div class="mode-selector">
+                <button class="active" onclick="setMode('iframe')" id="modeIframe">📦 iframe</button>
+                <button onclick="setMode('api')" id="modeApi">📊 API</button>
+            </div>
+            <button onclick="reloadFrame()">🔄 Презареди</button>
+            <button class="primary" onclick="switchProxy()">🔄 Смени прокси</button>
+            <button onclick="openDirect()">📱 Отвори</button>
         </div>
     </div>
 
-    <div class="grid" id="gridContainer">
-        <!-- Генерира се от JavaScript -->
+    <div class="warning">
+        <span>⚠️</span>
+        <span><strong>Mempool.space блокира iframe.</strong> Използваме <strong>CORS прокси</strong> за заобикаляне. Ако не се зарежда, превключете на <strong>API режим</strong>.</span>
+        <span id="proxyLabel" style="font-size:0.6rem; color:#7b99cc;">прокси: corsproxy.io</span>
+    </div>
+
+    <div class="iframe-wrapper" id="wrapper">
+        <iframe id="mainFrame" src="" loading="lazy" 
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture">
+        </iframe>
+        
+        <div class="fallback" id="fallback">
+            <div id="apiContent"></div>
+        </div>
+        
+        <div class="overlay" id="overlay">
+            <div class="spinner"></div>
+            <div class="msg">⏳ Зареждане на <span id="loadingLabel">mempool.space</span>...</div>
+        </div>
     </div>
 
     <div class="footer">
-        <span>⛓️ Данни от <a href="https://mempool.space" target="_blank">mempool.space</a> API</span>
-        <span>⚡ Enterprise Monitor v9.0 · Без iframe</span>
+        <span>⛓️ <a href="https://mempool.space" target="_blank">mempool.space</a></span>
+        <span>⚡ <span id="footerProxy">corsproxy.io</span> · <span id="modeLabel">iframe режим</span></span>
     </div>
 
 </div>
@@ -382,241 +265,178 @@
     //  КОНФИГУРАЦИЯ
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    const CONFIG = {
-        addresses: [
-            {
-                id: 'addr1',
-                label: '📬 Адрес 1',
-                short: 'bc1q7t4...m78fz',
-                address: 'bc1q7t4vyehjsexdme84qhdgd4dawcn54djh0m78fz'
-            },
-            {
-                id: 'addr2',
-                label: '🔐 Мултисиг 2/3',
-                short: 'bc1qwq...wvvzej',
-                address: 'bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej'
-            },
-            {
-                id: 'addr3',
-                label: '📥 Адрес 3',
-                short: 'bc1qut...wsxnd',
-                address: 'bc1qutf4rdlcgxlpflxu9nr6pcx024dksxezcwsxnd'
-            }
-        ],
-        block: {
-            id: 'block1',
-            label: '🧱 Блок #957111',
-            short: '000000...c8d03b4',
-            hash: '00000000000000000000c04c4dcbaea675537b7a3e97146f87df83ce1c8d03b4'
-        }
-    };
+    const ADDRESSES = [
+        'bc1q7t4vyehjsexdme84qhdgd4dawcn54djh0m78fz',
+        'bc1qwqdg6squsna38e46795at95yu9atm8azzmyvckulcc7kytlcckxswvvzej',
+        'bc1qutf4rdlcgxlpflxu9nr6pcx024dksxezcwsxnd'
+    ];
+
+    const BLOCK_HASH = '00000000000000000000c04c4dcbaea675537b7a3e97146f87df83ce1c8d03b4';
+
+    const PROXIES = [
+        { name: 'corsproxy.io', url: 'https://corsproxy.io/?url=' },
+        { name: 'api.allorigins.win', url: 'https://api.allorigins.win/raw?url=' }
+    ];
+
+    let currentProxyIndex = 0;
+    let currentMode = 'iframe'; // 'iframe' или 'api'
+    let currentTargetIndex = 0;
+
+    const TARGETS = [
+        `https://mempool.space/address/${ADDRESSES[0]}`,
+        `https://mempool.space/address/${ADDRESSES[1]}`,
+        `https://mempool.space/address/${ADDRESSES[2]}`,
+        `https://mempool.space/block/${BLOCK_HASH}?page=2`
+    ];
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    //  ГЕНЕРИРАНЕ НА КАРТИ
+    //  РЕЖИМИ
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    function generateCards() {
-        const container = document.getElementById('gridContainer');
-        let html = '';
-
-        CONFIG.addresses.forEach((item) => {
-            html += createAddressCard(item);
-        });
-
-        html += createBlockCard();
-        container.innerHTML = html;
-    }
-
-    function createAddressCard(item) {
-        return `
-            <div class="card" id="card-${item.id}">
-                <div class="card-header">
-                    <span class="label">${item.label}</span>
-                    <span class="addr-short">${item.short}</span>
-                </div>
-                <div class="card-body" id="body-${item.id}">
-                    <div class="balance-row">
-                        <span class="balance-amount" id="balance-${item.id}">
-                            <span class="loading-spinner"></span>
-                        </span>
-                        <span class="balance-usd" id="usd-${item.id}">--</span>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-label">Транзакции</div>
-                            <div class="stat-value" id="txcount-${item.id}">--</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Получено</div>
-                            <div class="stat-value" id="received-${item.id}">--</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Изпратено</div>
-                            <div class="stat-value" id="sent-${item.id}">--</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">UTXO</div>
-                            <div class="stat-value" id="utxo-${item.id}">--</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="info" id="time-${item.id}">⏳ зареждане...</span>
-                    <div>
-                        <button class="link-btn" onclick="refreshAddress('${item.address}', '${item.id}')">🔄</button>
-                        <a href="https://mempool.space/address/${item.address}" target="_blank" class="link-btn">🔗 Отвори</a>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    function createBlockCard() {
-        const item = CONFIG.block;
-        return `
-            <div class="card" id="card-${item.id}">
-                <div class="card-header">
-                    <span class="label">${item.label}</span>
-                    <span class="addr-short">${item.short}</span>
-                </div>
-                <div class="card-body" id="body-${item.id}">
-                    <div class="balance-row">
-                        <span class="balance-amount" id="block-height">#957111</span>
-                        <span class="balance-usd" id="block-time">--</span>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-label">Транзакции</div>
-                            <div class="stat-value" id="block-tx">--</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Размер</div>
-                            <div class="stat-value" id="block-size">--</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Тегло</div>
-                            <div class="stat-value" id="block-weight">--</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Такси</div>
-                            <div class="stat-value" id="block-fee">--</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <span class="info" id="time-${item.id}">⏳ зареждане...</span>
-                    <div>
-                        <button class="link-btn" onclick="refreshBlock()">🔄</button>
-                        <a href="https://mempool.space/block/${item.hash}?page=2" target="_blank" class="link-btn">🔗 Отвори</a>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    //  FETCH API ДАННИ
-    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-    async function fetchAddressData(address, id) {
-        const balanceEl = document.getElementById(`balance-${id}`);
-        const usdEl = document.getElementById(`usd-${id}`);
-        const txEl = document.getElementById(`txcount-${id}`);
-        const recEl = document.getElementById(`received-${id}`);
-        const sentEl = document.getElementById(`sent-${id}`);
-        const utxoEl = document.getElementById(`utxo-${id}`);
-        const timeEl = document.getElementById(`time-${id}`);
-
-        try {
-            const response = await fetch(`https://mempool.space/api/address/${address}`);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-
-            const chain = data.chain_stats || {};
-            const balance = (chain.funded_txo_sum || 0) - (chain.spent_txo_sum || 0);
-            const balanceBtc = (balance / 100000000).toFixed(8);
-            const usd = (balance / 100000000 * 80000).toFixed(2);
-
-            if (balanceEl) balanceEl.textContent = `${balanceBtc} BTC`;
-            if (usdEl) usdEl.textContent = `≈ $${usd}`;
-            if (txEl) txEl.textContent = (chain.tx_count || 0).toLocaleString();
-            if (recEl) recEl.textContent = ((chain.funded_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
-            if (sentEl) sentEl.textContent = ((chain.spent_txo_sum || 0) / 100000000).toFixed(4) + ' BTC';
-            if (utxoEl) utxoEl.textContent = chain.funded_txo_count || 0;
-            if (timeEl) timeEl.textContent = `✅ ${new Date().toLocaleTimeString()}`;
-
-            updateLastUpdate();
-            return data;
-        } catch (error) {
-            console.error('Грешка при зареждане на адрес:', error);
-            if (balanceEl) balanceEl.textContent = '❌ Грешка';
-            if (timeEl) timeEl.textContent = '❌ грешка при зареждане';
-            return null;
-        }
-    }
-
-    async function fetchBlockData() {
-        const id = 'block1';
-        const hash = CONFIG.block.hash;
+    function setMode(mode) {
+        currentMode = mode;
+        document.getElementById('modeIframe').classList.toggle('active', mode === 'iframe');
+        document.getElementById('modeApi').classList.toggle('active', mode === 'api');
+        document.getElementById('modeLabel').textContent = mode === 'iframe' ? 'iframe режим' : 'API режим';
         
-        const txEl = document.getElementById('block-tx');
-        const sizeEl = document.getElementById('block-size');
-        const weightEl = document.getElementById('block-weight');
-        const feeEl = document.getElementById('block-fee');
-        const timeEl = document.getElementById(`time-${id}`);
-        const blockTimeEl = document.getElementById('block-time');
-
-        try {
-            const response = await fetch(`https://mempool.space/api/block/${hash}`);
-            if (!response.ok) throw new Error(`HTTP ${response.status}`);
-            const data = await response.json();
-
-            if (txEl) txEl.textContent = (data.tx_count || 0).toLocaleString();
-            if (sizeEl) sizeEl.textContent = data.size ? (data.size / 1000000).toFixed(2) + ' MB' : '--';
-            if (weightEl) weightEl.textContent = data.weight ? (data.weight / 1000000).toFixed(2) + ' MWU' : '--';
-            if (feeEl) feeEl.textContent = data.extras?.totalFee ? (data.extras.totalFee / 100000000).toFixed(4) + ' BTC' : '--';
-            if (blockTimeEl) blockTimeEl.textContent = data.timestamp ? new Date(data.timestamp * 1000).toLocaleString() : '--';
-            if (timeEl) timeEl.textContent = `✅ ${new Date().toLocaleTimeString()}`;
-
-            updateLastUpdate();
-            return data;
-        } catch (error) {
-            console.error('Грешка при зареждане на блок:', error);
-            if (txEl) txEl.textContent = '❌ Грешка';
-            if (timeEl) timeEl.textContent = '❌ грешка при зареждане';
-            return null;
+        if (mode === 'iframe') {
+            document.getElementById('mainFrame').style.display = 'block';
+            document.getElementById('fallback').classList.remove('active');
+            loadFrame();
+        } else {
+            document.getElementById('mainFrame').style.display = 'none';
+            document.getElementById('fallback').classList.add('active');
+            loadApiData();
         }
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    //  КОНТРОЛ
+    //  IFRAME РЕЖИМ
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    function updateLastUpdate() {
-        const now = new Date();
-        document.getElementById('lastUpdate').textContent = now.toLocaleTimeString();
+    function loadFrame() {
+        const iframe = document.getElementById('mainFrame');
+        const target = TARGETS[currentTargetIndex];
+        const proxy = PROXIES[currentProxyIndex];
+        const url = proxy.url + encodeURIComponent(target);
+        
+        iframe.src = url;
+        document.getElementById('proxyLabel').textContent = `прокси: ${proxy.name}`;
+        document.getElementById('footerProxy').textContent = proxy.name;
+        document.getElementById('loadingLabel').textContent = 'mempool.space';
+        document.getElementById('overlay').classList.remove('hidden');
+        
+        console.log(`🔄 Зареждане (iframe): ${target} чрез ${proxy.name}`);
     }
 
-    function refreshAll() {
-        CONFIG.addresses.forEach(item => {
-            fetchAddressData(item.address, item.id);
-        });
-        fetchBlockData();
+    function switchProxy() {
+        currentProxyIndex = (currentProxyIndex + 1) % PROXIES.length;
+        if (currentMode === 'iframe') {
+            loadFrame();
+        }
     }
 
-    function refreshAddress(address, id) {
-        fetchAddressData(address, id);
+    function reloadFrame() {
+        if (currentMode === 'iframe') {
+            loadFrame();
+        } else {
+            loadApiData();
+        }
     }
 
-    function refreshBlock() {
-        fetchBlockData();
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  API РЕЖИМ (РЕЗЕРВЕН)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    async function loadApiData() {
+        const container = document.getElementById('apiContent');
+        container.innerHTML = '<div style="text-align:center;padding:2rem;color:#5a78a5;">⏳ Зареждане на данни от API...</div>';
+        
+        let html = '';
+        
+        // Зареждане на адреси
+        for (const addr of ADDRESSES) {
+            try {
+                const response = await fetch(`https://mempool.space/api/address/${addr}`);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                const chain = data.chain_stats || {};
+                const balance = ((chain.funded_txo_sum || 0) - (chain.spent_txo_sum || 0)) / 100000000;
+                const received = (chain.funded_txo_sum || 0) / 100000000;
+                const spent = (chain.spent_txo_sum || 0) / 100000000;
+                
+                html += `
+                    <div class="api-card">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.3rem;">
+                            <span style="font-size:0.7rem;color:#6f8fc0;font-family:monospace;">${addr}</span>
+                            <span class="balance">${balance.toFixed(8)} BTC</span>
+                        </div>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="label">Транзакции</div>
+                                <div class="value">${(chain.tx_count || 0).toLocaleString()}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="label">Получено</div>
+                                <div class="value">${received.toFixed(4)} BTC</div>
+                            </div>
+                            <div class="stat">
+                                <div class="label">Изпратено</div>
+                                <div class="value">${spent.toFixed(4)} BTC</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (e) {
+                html += `<div class="api-card" style="border-color:#6b2a2a;">
+                    <span style="color:#ff7b7b;">❌ Грешка при зареждане на ${addr}</span>
+                </div>`;
+            }
+        }
+        
+        // Зареждане на блок
+        try {
+            const response = await fetch(`https://mempool.space/api/block/${BLOCK_HASH}`);
+            if (response.ok) {
+                const data = await response.json();
+                html += `
+                    <div class="api-card" style="border-color:#2a4065;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.3rem;">
+                            <span style="font-size:0.7rem;color:#6f8fc0;font-family:monospace;">${BLOCK_HASH.slice(0, 20)}...</span>
+                            <span class="balance">#${data.height || '957111'}</span>
+                        </div>
+                        <div class="stats">
+                            <div class="stat">
+                                <div class="label">Транзакции</div>
+                                <div class="value">${(data.tx_count || 0).toLocaleString()}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="label">Размер</div>
+                                <div class="value">${data.size ? (data.size / 1000000).toFixed(2) + ' MB' : '--'}</div>
+                            </div>
+                            <div class="stat">
+                                <div class="label">Тегло</div>
+                                <div class="value">${data.weight ? (data.weight / 1000000).toFixed(2) + ' MWU' : '--'}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (e) {
+            // Игнорираме
+        }
+        
+        container.innerHTML = html || '<div style="text-align:center;padding:2rem;color:#ff7b7b;">❌ Грешка при зареждане на данни</div>';
+        document.getElementById('overlay').classList.add('hidden');
+        document.getElementById('liveStatus').textContent = '🟢 API режим';
     }
 
-    function openAllPages() {
-        CONFIG.addresses.forEach(item => {
-            window.open(`https://mempool.space/address/${item.address}`, '_blank');
-        });
-        window.open(`https://mempool.space/block/${CONFIG.block.hash}?page=2`, '_blank');
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    //  ДИРЕКТНО ОТВАРЯНЕ
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function openDirect() {
+        window.open(TARGETS[currentTargetIndex], '_blank');
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -638,28 +458,41 @@
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     document.addEventListener('DOMContentLoaded', function() {
-        generateCards();
         updateClock();
         setInterval(updateClock, 10000);
-
-        // Зареждане на данни
-        CONFIG.addresses.forEach(item => {
-            fetchAddressData(item.address, item.id);
-        });
-        fetchBlockData();
-
-        // Автоматично обновяване на всеки 60 секунди
-        setInterval(refreshAll, 60000);
-
-        console.log('✅ Enterprise Blockchain Monitor зареден!');
-        console.log('📌 Без iframe, без CSP грешки, използва API');
+        
+        // Стартираме в iframe режим
+        setMode('iframe');
+        
+        // След 10 секунди, ако iframe не е зареден, превключваме на API
+        setTimeout(() => {
+            try {
+                const iframe = document.getElementById('mainFrame');
+                const doc = iframe.contentDocument || iframe.contentWindow?.document;
+                if (!doc || doc.body.innerHTML.trim() === '' || doc.body.innerHTML.includes('Error')) {
+                    console.log('⚠️ iframe не се зарежда, превключване към API режим');
+                    setMode('api');
+                    document.getElementById('liveStatus').textContent = '🟡 API режим (резерв)';
+                } else {
+                    document.getElementById('overlay').classList.add('hidden');
+                    document.getElementById('liveStatus').textContent = '🟢 iframe режим';
+                }
+            } catch (e) {
+                console.log('⚠️ iframe грешка, превключване към API режим');
+                setMode('api');
+                document.getElementById('liveStatus').textContent = '🟡 API режим (резерв)';
+            }
+        }, 10000);
+        
+        console.log('✅ Mempool Live зареден!');
+        console.log('📌 Опитваме iframe, при грешка превключваме към API');
     });
 
     // Глобални функции
-    window.refreshAll = refreshAll;
-    window.refreshAddress = refreshAddress;
-    window.refreshBlock = refreshBlock;
-    window.openAllPages = openAllPages;
+    window.setMode = setMode;
+    window.switchProxy = switchProxy;
+    window.reloadFrame = reloadFrame;
+    window.openDirect = openDirect;
 </script>
 
 </body>
